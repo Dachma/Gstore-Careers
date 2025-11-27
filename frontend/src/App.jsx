@@ -1,16 +1,16 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Careers from './pages/Careers';
+import Apply from './pages/Apply';
+import AdminApplications from './pages/AdminApplications';
 
-function App() {
-  const [count, setCount] = useState(0)
-
+export default function App() {
   return (
-    <>
-      <div>hi</div>
-    </>
-  )
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Careers />} />
+        <Route path="/apply/:id" element={<Apply />} />
+        <Route path="/admin/applications" element={<AdminApplications />} />
+      </Routes>
+    </BrowserRouter>
+  );
 }
-
-export default App
