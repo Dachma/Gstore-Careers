@@ -1,35 +1,102 @@
-import { useParams } from 'react-router-dom'
+import { useParams } from "react-router-dom";
+import { useState } from "react";
 
 export default function Apply() {
-  const { vacancyId } = useParams()
-    console.log(vacancyId)
+  const { vacancyId } = useParams();
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState(false);
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    resume: null,
+  });
+
+  const handleChange = (e) => {
+    const { name, value, files } = e.target;
+    setForm((prev) => ({
+      ...prev,
+      [name]: files ? files[0] : value,
+    }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setError("");
+
+    if (!form.name || !form.email || !form.phone || !form.resume) {
+      setError("All fields are required");
+      return;
+    }
+
+    if (form.resume.type !== "application/pdf") {
+      setError("CV must be a PDF file");
+      return;
+    }
+
+    console.log({ ...form, vacancyId });
+
+    setSuccess(true);
+  };
+
+  if (success) {
+    return (
+      <div>
+        <h2>✅ Application submitted successfully</h2>
+        <p>Thank you for applying. We’ll contact you soon.</p>
+      </div>
+    );
+  }
+
   return (
     <div>
       <h1>Apply for: {vacancyId}</h1>
 
-      <form>
+      {error && <p style={{ color: "red" }}>{error}</p>}
+
+      <form onSubmit={handleSubmit}>
         <div>
-          <label>Name</label>
-          <input type="text" />
+          <label>Full Name</label>
+          <input
+            type="text"
+            name="name"
+            value={form.name}
+            onChange={handleChange}
+          />
         </div>
 
         <div>
           <label>Email</label>
-          <input type="email" />
+          <input
+            type="email"
+            name="email"
+            value={form.email}
+            onChange={handleChange}
+          />
         </div>
 
         <div>
           <label>Phone</label>
-          <input type="tel" />
+          <input
+            type="tel"
+            name="phone"
+            value={form.phone}
+            onChange={handleChange}
+          />
         </div>
 
         <div>
           <label>CV (PDF only)</label>
-          <input type="file" accept="application/pdf" />
+          <input
+            type="file"
+            name="resume"
+            accept="application/pdf"
+            onChange={handleChange}
+          />
         </div>
 
         <button type="submit">Submit</button>
       </form>
     </div>
-  )
+  );
 }
