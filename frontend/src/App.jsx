@@ -8,7 +8,7 @@ export default function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Careers />} />
-        <Route path="/apply/:id" element={<Apply />} />
+        <Route path="/apply/:vacancyId" element={<Apply />} />
         <Route path="/admin/applications" element={<AdminApplications />} />
       </Routes>
     </BrowserRouter>
