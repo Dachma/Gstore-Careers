@@ -4,7 +4,7 @@ import { upload } from '../middleware/upload.js';
 
 const router = express.Router();
 
-const DATA_FILE = 'data/applications.json';
+const DATA_FILE = './data/applications.json';
 
 router.post(
   '/',
@@ -41,6 +41,7 @@ router.post(
         message: 'Application submitted successfully',
       });
     } catch (err) {
+        console.error('🔥 APPLY ERROR:', err);
       res.status(500).json({ message: err.message });
     }
   }

@@ -3,7 +3,7 @@ import { useState } from "react";
 
 export default function Apply() {
   const { vacancyId } = useParams();
-  const [isDragging, setIsDragging] = useState(false)
+  const [isDragging, setIsDragging] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
   const [form, setForm] = useState({
@@ -11,6 +11,11 @@ export default function Apply() {
     email: "",
     phone: "",
     resume: null,
+  });
+  const [status, setStatus] = useState({
+    loading: false,
+    error: "",
+    success: "",
   });
 
   const handleDragOver = (e) => {
@@ -45,9 +50,11 @@ export default function Apply() {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
+
+    setStatus({ loading: true, error: '', success: '' });
 
     if (!form.name || !form.email || !form.phone || !form.resume) {
       setError("All fields are required");
@@ -55,11 +62,45 @@ export default function Apply() {
     }
 
     if (form.resume.type !== "application/pdf") {
-      setError("CV must be a PDF file");
+      setStatus({ loading: false, error: 'Only PDF files are allowed', success: '' });
       return;
     }
 
-    console.log({ ...form, vacancyId });
+    try {
+    const formData = new FormData();
+    formData.append('name', form.name);
+    formData.append('email', form.email);
+    formData.append('phone', form.phone);
+    formData.append('vacancyId', vacancyId); // from route param
+    formData.append('resume', form.resume);   // MUST match upload.single('resume')
+
+    const res = await fetch('http://localhost:5000/apply', {
+      method: 'POST',
+      body: formData, // ❗ no headers here
+    });
+
+    const data = await res.json();
+    console.log(data)
+    if (!res.ok) {
+      throw new Error(data.message || 'Something went wrong');
+    }
+
+    setStatus({
+      loading: false,
+      error: '',
+      success: 'Application submitted successfully!',
+    });
+
+    // optional: clear form
+    setForm({ name: '', email: '', phone: '', resume: null });
+  } catch (err) {
+    setStatus({
+      loading: false,
+      error: err.message,
+      success: '',
+    });
+  }
+
 
     setSuccess(true);
   };
@@ -87,6 +128,7 @@ export default function Apply() {
             name="name"
             value={form.name}
             onChange={handleChange}
+            required
           />
         </div>
 
@@ -97,6 +139,7 @@ export default function Apply() {
             name="email"
             value={form.email}
             onChange={handleChange}
+            required
           />
         </div>
 
@@ -107,6 +150,7 @@ export default function Apply() {
             name="phone"
             value={form.phone}
             onChange={handleChange}
+            required
           />
         </div>
 
@@ -121,10 +165,15 @@ export default function Apply() {
             name="resume"
             accept="application/pdf"
             onChange={handleChange}
+            required
           />
         </div>
 
-        <button type="submit">Submit</button>
+        <button type="submit" disabled={status.loading}>
+          {status.loading ? "Submitting…" : "Submit"}
+        </button>
+        {status.error && <p style={{ color: "red" }}>{status.error}</p>}
+        {status.success && <p style={{ color: "green" }}>{status.success}</p>}
       </form>
     </div>
   );

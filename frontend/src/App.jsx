@@ -1,7 +1,7 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Careers from './pages/Careers';
-import Apply from './pages/Apply';
-import AdminApplications from './pages/AdminApplications';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Careers from "./pages/Careers";
+import Apply from "./pages/Apply";
+import AdminApplications from "./pages/AdminApplications";
 
 export default function App() {
   return (
