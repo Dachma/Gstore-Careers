@@ -3,6 +3,7 @@ import { useState } from "react";
 
 export default function Apply() {
   const { vacancyId } = useParams();
+  const [isDragging, setIsDragging] = useState(false)
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
   const [form, setForm] = useState({
@@ -11,6 +12,30 @@ export default function Apply() {
     phone: "",
     resume: null,
   });
+
+  const handleDragOver = (e) => {
+    e.preventDefault();
+    setIsDragging(true);
+  };
+
+  const handleDragLeave = () => {
+    setIsDragging(false);
+  };
+
+  const handleDrop = (e) => {
+    e.preventDefault();
+    setIsDragging(false);
+
+    const file = e.dataTransfer.files[0];
+    if (!file) return;
+
+    if (file.type !== "application/pdf") {
+      setError("CV must be a PDF file");
+      return;
+    }
+
+    setForm((prev) => ({ ...prev, resume: file }));
+  };
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;
@@ -85,7 +110,11 @@ export default function Apply() {
           />
         </div>
 
-        <div>
+        <div
+          onDragOver={handleDragOver}
+          onDragLeave={handleDragLeave}
+          onDrop={handleDrop}
+        >
           <label>CV (PDF only)</label>
           <input
             type="file"
