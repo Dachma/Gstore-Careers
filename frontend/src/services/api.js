@@ -1,7 +1,6 @@
 const API_BASE = 'http://localhost:5000';
 
 export async function getApplications(params = {}) {
-  // ✅ remove undefined / empty values
   const cleanParams = Object.fromEntries(
     Object.entries(params).filter(
       ([, value]) => value !== undefined && value !== ''

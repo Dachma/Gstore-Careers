@@ -14,13 +14,12 @@ router.post(
     try {
       const { name, email, phone, vacancyId } = req.body;
 
-      // ✅ backend validation
       if (!name || !email || !phone || !vacancyId || !req.file) {
         return res.status(400).json({ message: 'Missing required fields' });
       }
       
       const newApplication = {
-        id: Date.now(),               // OK for JSON storage
+        id: Date.now(),
         name,
         email,
         phone,
@@ -35,7 +34,6 @@ router.post(
         const data = await fs.readFile(DATA_FILE, 'utf-8');
         applications = JSON.parse(data);
       } catch (err) {
-        // file does not exist yet → start empty
         if (err.code !== 'ENOENT') throw err;
       }
 

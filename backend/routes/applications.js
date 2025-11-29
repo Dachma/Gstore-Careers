@@ -10,7 +10,6 @@ router.get("/", async (req, res) => {
   try {
     let applications = [];
 
-    // ✅ read data safely
     try {
       const data = await fs.readFile(DATA_FILE, "utf-8");
       applications = JSON.parse(data);
@@ -29,12 +28,10 @@ router.get("/", async (req, res) => {
       limit = 10,
     } = req.query;
 
-    // ✅ filter by vacancy
     if (vacancyId) {
       result = result.filter(app => app.vacancyId === vacancyId);
     }
 
-    // ✅ filter by date range
     if (from) {
       result = result.filter(app => new Date(app.createdAt) >= new Date(from));
     }
@@ -43,7 +40,6 @@ router.get("/", async (req, res) => {
       result = result.filter(app => new Date(app.createdAt) <= new Date(to));
     }
 
-    // ✅ sorting
     if (sort === "date_asc") {
       result.sort(
         (a, b) => new Date(a.createdAt) - new Date(b.createdAt)
@@ -76,7 +72,16 @@ if (sort === 'name_desc') {
   );
 }
 
-    // ✅ pagination
+const { search } = req.query;
+if (search) {
+  const text = search.toLowerCase();
+
+  result = result.filter(app =>
+    (app.name && app.name.toLowerCase().includes(text)) ||
+    (app.email && app.email.toLowerCase().includes(text))
+  );
+}
+
     const pageNumber = parseInt(page, 10);
     const limitNumber = parseInt(limit, 10);
 

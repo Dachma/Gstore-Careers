@@ -1,17 +1,28 @@
 import { useEffect, useState } from "react";
 import { getApplications } from "../services/api";
+import { logout } from "../services/auth";
+import { useNavigate } from "react-router-dom";
 
 export default function AdminApplications() {
   const [applications, setApplications] = useState([]);
   const [sort, setSort] = useState("date_desc");
   const [vacancyFilter, setVacancyFilter] = useState("");
+  const navigate = useNavigate();
+  const [from, setFrom] = useState("");
+  const [to, setTo] = useState("");
+  const [search, setSearch] = useState('');
+
+  function handleLogout() {
+    logout();
+    navigate("/admin/login");
+  }
 
   function handleExportCSV() {
     if (!applications.length) {
       return;
     }
 
-    const headers = ["Name", "Email", "Phone", "Vacancy", "Date"];
+    const headers = ["Name", "Email", "Phone", "Vacancy", "Date", "Resume"];
 
     const rows = applications.map((app) => [
       app.name,
@@ -43,6 +54,9 @@ export default function AdminApplications() {
         const res = await getApplications({
           sort,
           vacancyId: vacancyFilter || undefined,
+          from: from || undefined,
+          to: to || undefined,
+          search: search || undefined,
         });
 
         setApplications(res.data);
@@ -52,11 +66,31 @@ export default function AdminApplications() {
     }
 
     loadApplications();
-  }, [sort, vacancyFilter]);
+  }, [sort, vacancyFilter, from, to, search]);
 
   return (
     <div>
       <h1>Admin Applications</h1>
+      <div>
+  <label>Search: </label>
+  <input
+    type="text"
+    placeholder="Name or email"
+    value={search}
+    onChange={(e) => setSearch(e.target.value)}
+  />
+</div>
+      <div>
+        <label>From: </label>
+        <input
+          type="date"
+          value={from}
+          onChange={(e) => setFrom(e.target.value)}
+        />
+
+        <label style={{ marginLeft: 10 }}>To: </label>
+        <input type="date" value={to} onChange={(e) => setTo(e.target.value)} />
+      </div>
       <div>
         <label>Sort by: </label>
 
@@ -81,9 +115,7 @@ export default function AdminApplications() {
           <option value="qa-engineer">QA Engineer</option>
         </select>
       </div>
-      <button onClick={handleExportCSV}>
-  Export CSV
-</button>
+      <button onClick={handleExportCSV}>Export CSV</button>
       <table>
         <thead>
           <tr>
@@ -96,25 +128,34 @@ export default function AdminApplications() {
         </thead>
 
         <tbody>
-          {applications.map((app) => (
-            <tr key={app.id}>
-              <td>{app.name}</td>
-              <td>{app.email}</td>
-              <td>{app.vacancyId}</td>
-              <td>{new Date(app.createdAt).toLocaleDateString()}</td>
+          {applications.length === 0 ? (
+            <tr>
               <td>
-                <a
-                  href={`http://localhost:5000/uploads/resumes/${app.resumeFile}`}
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  Download
-                </a>
+                No applications found for the selected filters
               </td>
             </tr>
-          ))}
+          ) : (
+            applications.map((app) => (
+              <tr key={app.id}>
+                <td>{app.name}</td>
+                <td>{app.email}</td>
+                <td>{app.vacancyId}</td>
+                <td>{new Date(app.createdAt).toLocaleDateString()}</td>
+                <td>
+                  <a
+                    href={`http://localhost:5000/uploads/resumes/${app.resumeFile}`}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    Download
+                  </a>
+                </td>
+              </tr>
+            ))
+          )}
         </tbody>
       </table>
+      <button onClick={handleLogout}>Logout</button>
     </div>
   );
 }
