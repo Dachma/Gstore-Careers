@@ -18,7 +18,7 @@ router.post(
       if (!name || !email || !phone || !vacancyId || !req.file) {
         return res.status(400).json({ message: 'Missing required fields' });
       }
-
+      
       const newApplication = {
         id: Date.now(),               // OK for JSON storage
         name,

@@ -57,9 +57,13 @@ export default function Apply() {
     setStatus({ loading: true, error: '', success: '' });
 
     if (!form.name || !form.email || !form.phone || !form.resume) {
-      setError("All fields are required");
-      return;
-    }
+  setStatus({
+    loading: false,
+    error: 'All fields are required',
+    success: '',
+  });
+  return;
+}
 
     if (form.resume.type !== "application/pdf") {
       setStatus({ loading: false, error: 'Only PDF files are allowed', success: '' });
@@ -73,7 +77,7 @@ export default function Apply() {
     formData.append('phone', form.phone);
     formData.append('vacancyId', vacancyId); // from route param
     formData.append('resume', form.resume);   // MUST match upload.single('resume')
-
+     
     const res = await fetch('http://localhost:5000/apply', {
       method: 'POST',
       body: formData, // ❗ no headers here

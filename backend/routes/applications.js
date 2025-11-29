@@ -56,6 +56,26 @@ router.get("/", async (req, res) => {
       );
     }
 
+    if (sort === 'name_asc') {
+  result.sort((a, b) =>
+    a.name.trim().localeCompare(
+      b.name.trim(),
+      'en',
+      { sensitivity: 'base' }
+    )
+  );
+}
+
+if (sort === 'name_desc') {
+  result.sort((a, b) =>
+    b.name.trim().localeCompare(
+      a.name.trim(),
+      'en',
+      { sensitivity: 'base' }
+    )
+  );
+}
+
     // ✅ pagination
     const pageNumber = parseInt(page, 10);
     const limitNumber = parseInt(limit, 10);
