@@ -1,25 +1,26 @@
 import express from 'express';
-import fs from 'fs';
+import fs from 'fs/promises';
+import path from 'path';
 import { upload } from '../middleware/upload.js';
 
 const router = express.Router();
 
-const DATA_FILE = './data/applications.json';
+const DATA_FILE = path.resolve('data', 'applications.json');
 
 router.post(
   '/',
-  upload.single('resume'), // 👈 'resume' must match frontend FormData key
-  (req, res) => {
+  upload.single('resume'),
+  async (req, res) => {
     try {
       const { name, email, phone, vacancyId } = req.body;
 
-      // ✅ basic validation (backend always validates)
+      // ✅ backend validation
       if (!name || !email || !phone || !vacancyId || !req.file) {
         return res.status(400).json({ message: 'Missing required fields' });
       }
 
       const newApplication = {
-        id: Date.now(),
+        id: Date.now(),               // OK for JSON storage
         name,
         email,
         phone,
@@ -28,21 +29,29 @@ router.post(
         createdAt: new Date().toISOString(),
       };
 
-      // ✅ read existing data (or initialize)
-      const existing = fs.existsSync(DATA_FILE)
-        ? JSON.parse(fs.readFileSync(DATA_FILE, 'utf-8'))
-        : [];
+      let applications = [];
 
-      existing.push(newApplication);
+      try {
+        const data = await fs.readFile(DATA_FILE, 'utf-8');
+        applications = JSON.parse(data);
+      } catch (err) {
+        // file does not exist yet → start empty
+        if (err.code !== 'ENOENT') throw err;
+      }
 
-      fs.writeFileSync(DATA_FILE, JSON.stringify(existing, null, 2));
+      applications.push(newApplication);
+
+      await fs.writeFile(
+        DATA_FILE,
+        JSON.stringify(applications, null, 2)
+      );
 
       res.status(201).json({
         message: 'Application submitted successfully',
       });
     } catch (err) {
-        console.error('🔥 APPLY ERROR:', err);
-      res.status(500).json({ message: err.message });
+      console.error(err);
+      res.status(500).json({ message: 'Server error' });
     }
   }
 );

@@ -2,3 +2,4 @@ node_modules/
 dist/
 .env
 uploads/resumes/
+backend/data/applications.json
