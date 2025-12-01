@@ -56,26 +56,6 @@ In a real production environment, additional features such as secure authenticat
 
 ---
 
-## Project Structure
-
-```
-gstore-careers/
-  backend/
-    server.js
-    applications.json
-
-  frontend/
-    src/
-      pages/
-      components/
-      services/
-      routes/
-```
-
-(This is a simplified view; the node_modules folders are omitted.)
-
----
-
 ## Running the Project
 
 ### 1. Backend
