@@ -176,27 +176,25 @@ export default function AdminApplications() {
             )}
           </tbody>
         </table>
-        {applications.length > 0 && (
-          <div className="pagination">
-            <button
-              disabled={pagination.page === 1}
-              onClick={() => setPage((p) => p - 1)}
-            >
-              Previous
-            </button>
+        <div className="pagination">
+          <button
+            disabled={pagination.page === 1}
+            onClick={() => setPage((p) => p - 1)}
+          >
+            Previous
+          </button>
 
-            <span>
-              Page {pagination.page} of {pagination.totalPages}
-            </span>
+          <span>
+            Page {pagination.page} of {pagination.totalPages}
+          </span>
 
-            <button
-              disabled={pagination.page === pagination.totalPages}
-              onClick={() => setPage((p) => p + 1)}
-            >
-              Next
-            </button>
-          </div>
-        )}
+          <button
+            disabled={pagination.page === pagination.totalPages}
+            onClick={() => setPage((p) => p + 1)}
+          >
+            Next
+          </button>
+        </div>
       </div>
     </div>
   );
