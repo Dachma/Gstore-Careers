@@ -1,16 +1,131 @@
-# React + Vite
+# GStore Careers Portal
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Overview
 
-Currently, two official plugins are available:
+This project demonstrates a basic full‑stack job posting and application system with an admin dashboard for reviewing applications.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+In a real production environment, additional features such as secure authentication, persistent databases, server‑side validation, and cloud deployment would be implemented.
 
-## React Compiler
+---
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Features
 
-## Expanding the ESLint configuration
+### Public Users
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+* Browse available job vacancies
+* View job descriptions
+* Submit job applications with uploaded resume
+
+### Admin User
+
+* Login to access admin dashboard
+* Review list of applications
+* Filter applications by vacancy
+* View applicant details
+
+### Assignment Notes
+
+* This project intentionally uses simplified logic and hardcoded values for demonstration.
+* **Hardcoded Admin Credentials:**
+
+  * **Email:** `admin@gstore.com`
+  * **Password:** `admin123`
+* These are visible in the source code (`frontend/src/services/auth.js`)
+
+---
+
+## Tech Stack
+
+### Frontend
+
+* React Vite
+* React Router
+* Basic CSS modules
+
+### Backend
+
+* Node.js + Express
+* File‑based JSON storage (instead of a real database)
+
+### In a real-world project, I would implement
+
+* A dedicated database (PostgreSQL / MongoDB / Firebase)
+* Real authentication (JWT + hashed passwords)
+* File upload storage via AWS S3 or similar
+* Centralized logging and analytics
+
+---
+
+## Project Structure
+
+```
+gstore-careers/
+  backend/
+    server.js
+    applications.json
+
+  frontend/
+    src/
+      pages/
+      components/
+      services/
+      routes/
+```
+
+(This is a simplified view; the node_modules folders are omitted.)
+
+---
+
+## Running the Project
+
+### 1. Backend
+
+```
+cd backend
+npm install
+node server.js
+```
+
+The backend runs on **http://localhost:5000**.
+
+### 2. Frontend
+
+```
+cd frontend
+npm install
+npm run dev
+```
+
+The frontend runs on **http://localhost:5173**.
+
+---
+
+## How the Admin Login Works
+
+* No database or authentication service is used.
+* Credentials are checked entirely in the browser using:
+
+  * `ADMIN_EMAIL = "admin@gstore.com"`
+  * `ADMIN_PASSWORD = "admin123"`
+* Successful login sets `localStorage.setItem("isAdmin", "true")`.
+* Protected routes simply check localStorage.
+
+### In a real-world project, I would implement
+
+* Secure sessions or JWT tokens
+* Server‑side authentication verification
+* Password hashing (bcrypt)
+* Logout token invalidation
+* Role-based access control
+
+---
+
+## Future Improvements
+
+If this assignment were expanded into a real production project, I would enhance it with:
+
+* **Database integration** for vacancies, applications, and users
+* **File uploads** stored securely in cloud storage
+* **Improved UI/UX** with a design system (Material UI, Tailwind, etc.)
+* **Search and filters** for job vacancies
+* **Email notifications** to applicants
