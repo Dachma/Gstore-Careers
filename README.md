@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # GStore Careers Portal
 
 ## Overview
@@ -130,5 +129,3 @@ If this assignment were expanded into a real production project, I would enhance
 * **Improved UI/UX** with a design system (Material UI, Tailwind, etc.)
 * **Search and filters** for job vacancies
 * **Email notifications** to applicants
-=======
->>>>>>> parent of 1d2d518 (final commit: complete project implementation and deliver polished README for review)
