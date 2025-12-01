@@ -1,11 +1,12 @@
 import { useParams } from "react-router-dom";
 import { useState } from "react";
+import { vacancies } from "../data/vacancies";
+import { Link } from "react-router-dom";
+import "../styles/Apply.css";
 
 export default function Apply() {
   const { vacancyId } = useParams();
   const [isDragging, setIsDragging] = useState(false);
-  const [error, setError] = useState("");
-  const [success, setSuccess] = useState(false);
   const [form, setForm] = useState({
     name: "",
     email: "",
@@ -35,7 +36,11 @@ export default function Apply() {
     if (!file) return;
 
     if (file.type !== "application/pdf") {
-      setError("CV must be a PDF file");
+      setStatus({
+        loading: false,
+        error: "CV must be a PDF file",
+        success: "",
+      });
       return;
     }
 
@@ -52,133 +57,158 @@ export default function Apply() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError("");
 
-    setStatus({ loading: true, error: '', success: '' });
+    setStatus({ loading: true, error: "", success: "" });
 
     if (!form.name || !form.email || !form.phone || !form.resume) {
-  setStatus({
-    loading: false,
-    error: 'All fields are required',
-    success: '',
-  });
-  return;
-}
+      setStatus({
+        loading: false,
+        error: "All fields are required",
+        success: "",
+      });
+      return;
+    }
 
     if (form.resume.type !== "application/pdf") {
-      setStatus({ loading: false, error: 'Only PDF files are allowed', success: '' });
+      setStatus({
+        loading: false,
+        error: "Only PDF files are allowed",
+        success: "",
+      });
       return;
     }
 
     try {
-    const formData = new FormData();
-    formData.append('name', form.name);
-    formData.append('email', form.email);
-    formData.append('phone', form.phone);
-    formData.append('vacancyId', vacancyId); // from route param
-    formData.append('resume', form.resume);   // MUST match upload.single('resume')
-     
-    const res = await fetch('http://localhost:5000/apply', {
-      method: 'POST',
-      body: formData, // ❗ no headers here
-    });
+      const formData = new FormData();
+      formData.append("name", form.name);
+      formData.append("email", form.email);
+      formData.append("phone", form.phone);
+      formData.append("vacancyId", vacancyId);
+      formData.append("resume", form.resume);
 
-    const data = await res.json();
-    console.log(data)
-    if (!res.ok) {
-      throw new Error(data.message || 'Something went wrong');
+      const res = await fetch("http://localhost:5000/apply", {
+        method: "POST",
+        body: formData,
+      });
+
+      const data = await res.json();
+      console.log(data);
+      if (!res.ok) {
+        throw new Error(data.message || "Something went wrong");
+      }
+
+      setStatus({
+        loading: false,
+        error: "",
+        success: "Application submitted successfully!",
+      });
+
+      setForm({ name: "", email: "", phone: "", resume: null });
+    } catch (err) {
+      setStatus({
+        loading: false,
+        error: err.message,
+        success: "",
+      });
     }
-
-    setStatus({
-      loading: false,
-      error: '',
-      success: 'Application submitted successfully!',
-    });
-
-    // optional: clear form
-    setForm({ name: '', email: '', phone: '', resume: null });
-  } catch (err) {
-    setStatus({
-      loading: false,
-      error: err.message,
-      success: '',
-    });
-  }
-
-
-    setSuccess(true);
   };
 
-  if (success) {
-    return (
-      <div>
-        <h2>✅ Application submitted successfully</h2>
-        <p>Thank you for applying. We’ll contact you soon.</p>
-      </div>
-    );
-  }
+  const vacancy = vacancies.find((v) => v.id === vacancyId);
 
   return (
-    <div>
-      <h1>Apply for: {vacancyId}</h1>
-
-      {error && <p style={{ color: "red" }}>{error}</p>}
-
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Full Name</label>
-          <input
-            type="text"
-            name="name"
-            value={form.name}
-            onChange={handleChange}
-            required
-          />
-        </div>
-
-        <div>
-          <label>Email</label>
-          <input
-            type="email"
-            name="email"
-            value={form.email}
-            onChange={handleChange}
-            required
-          />
-        </div>
-
-        <div>
-          <label>Phone</label>
-          <input
-            type="tel"
-            name="phone"
-            value={form.phone}
-            onChange={handleChange}
-            required
-          />
-        </div>
-
-        <div
-          onDragOver={handleDragOver}
-          onDragLeave={handleDragLeave}
-          onDrop={handleDrop}
+    <div className="apply-page">
+      <div className="apply-card">
+        <h1 className="apply-title">
+          Apply for: {vacancy?.title || vacancyId}
+        </h1>
+        <form
+          className={`apply-form ${status.success ? "success" : ""}`}
+          onSubmit={handleSubmit}
+          noValidate
         >
-          <label>CV (PDF only)</label>
-          <input
-            type="file"
-            name="resume"
-            accept="application/pdf"
-            onChange={handleChange}
-            required
-          />
-        </div>
+          <div className="form-group">
+            <label>Full Name</label>
+            <input
+              type="text"
+              name="name"
+              value={form.name}
+              onChange={handleChange}
+            />
+          </div>
 
-        <button type="submit" disabled={status.loading}>
-          {status.loading ? "Submitting…" : "Submit"}
-        </button>
-        {status.error && <p style={{ color: "red" }}>{status.error}</p>}
-        {status.success && <p style={{ color: "green" }}>{status.success}</p>}
-      </form>
+          <div className="form-group">
+            <label>Email</label>
+            <input
+              type="email"
+              name="email"
+              value={form.email}
+              onChange={handleChange}
+            />
+          </div>
+
+          <div className="form-group">
+            <label>Phone</label>
+            <input
+              type="tel"
+              name="phone"
+              value={form.phone}
+              onChange={handleChange}
+            />
+          </div>
+
+          <div
+            className={`upload-box ${isDragging ? "dragging" : ""}`}
+            onDragOver={handleDragOver}
+            onDragLeave={handleDragLeave}
+            onDrop={handleDrop}
+            onClick={() =>
+              document.querySelector('input[name="resume"]').click()
+            }
+          >
+            <label className="file-name">
+              {form.resume
+                ? form.resume.name
+                : "Drag & drop or click to upload"}
+            </label>
+
+            <input
+              type="file"
+              name="resume"
+              accept="application/pdf"
+              onChange={handleChange}
+              hidden
+            />
+          </div>
+
+          <button
+            className="submit-btn"
+            type="submit"
+            disabled={status.loading || status.success}
+          >
+            {status.loading
+              ? "Submitting…"
+              : status.success
+              ? "Submitted"
+              : "Submit"}
+          </button>
+          {status.error && <p className="error-text">{status.error}</p>}
+          {status.success && (
+            <div className="success-card">
+              <div className="success-icon">✅</div>
+              <h2>Application submitted</h2>
+              <p>
+                Thank you for applying. Our team will review your application
+                and contact you if there’s a match.
+              </p>
+            </div>
+          )}
+        </form>
+        <div className="back-link-wrap">
+          <Link to="/" className="back-link">
+            Back to Careers
+          </Link>
+        </div>
+      </div>
     </div>
   );
 }

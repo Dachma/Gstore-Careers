@@ -1,0 +1,170 @@
+.apply-page {
+  min-height: 100vh;
+  background: #0c1220;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  font-family: system-ui, -apple-system, sans-serif;
+}
+
+.apply-card {
+  width: 100%;
+  max-width: 460px;
+  background: #0c1220;
+  border: 1px solid rgba(221, 226, 233, 0.1);
+  border-radius: 10px;
+  padding: 24px;
+}
+
+.apply-title {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #f5c96b;
+}
+
+.apply-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.apply-form.success {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-group label {
+  font-size: 14px;
+  color: #dde2e9;
+}
+
+.form-group input {
+  padding: 10px 12px;
+  border-radius: 6px;
+  border: 1px solid #3a6ff8;
+  background: #0c1220;
+  color: #dde2e9;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: #f5c96b;
+}
+
+.file-name {
+  margin-top: 8px;
+  font-size: 13px;
+  opacity: 0.85;
+}
+
+.upload-box {
+  position: relative;
+  border: 2px dashed #3a6ff8;
+  border-radius: 8px;
+  padding: 18px;
+  text-align: center;
+  cursor: pointer;
+  color: #dde2e9;
+}
+
+.upload-box.dragging {
+  border-color: #f5c96b;
+  background: rgba(245, 201, 107, 0.05);
+}
+
+.upload-box input {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.upload-box:hover {
+  background: rgba(58, 111, 248, 0.05);
+}
+
+.submit-btn {
+  margin-top: 8px;
+  padding: 12px;
+  background: #3a6ff8;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.submit-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.error-text {
+  color: #ff6b6b;
+  font-size: 14px;
+  text-align: center;
+}
+
+.success-text {
+  color: #4cd964;
+  font-size: 14px;
+  text-align: center;
+}
+
+.success-card {
+  margin-top: 24px;
+  padding: 24px;
+  border-radius: 12px;
+  background: rgba(58, 111, 248, 0.08);
+  border: 1px solid #3a6ff8;
+  text-align: center;
+}
+
+.success-icon {
+  font-size: 32px;
+  margin-bottom: 12px;
+}
+
+.success-card h2 {
+  margin-bottom: 8px;
+  color: #3a6ff8;
+}
+
+.success-card p {
+  color: #dde2e9;
+  line-height: 1.5;
+}
+
+.back-link-wrap {
+  display: flex;
+  justify-content: center;
+}
+
+.back-link {
+  display: inline-block;
+  margin-top: 16px;
+  color: #f5c96b;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.back-link:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 480px) {
+  .apply-card {
+    padding: 16px;
+  }
+
+  .apply-title {
+    font-size: 20px;
+  }
+}

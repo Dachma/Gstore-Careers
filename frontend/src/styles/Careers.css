@@ -1,0 +1,110 @@
+.careers-wrapper {
+  min-height: 100vh;
+  background: radial-gradient(circle at top, #141b2f, #0c1220 60%);
+}
+
+.careers-page {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 80px 24px;
+  color: #dde2e9;
+}
+
+.careers-title {
+  text-align: center;
+  font-size: 36px;
+  font-weight: 700;
+  color: #dde2e9;
+  margin-bottom: 12px;
+}
+
+.careers-subtitle {
+  text-align: center;
+  font-size: 16px;
+  color: #9aa3b2;
+  margin-bottom: 56px;
+}
+
+.vacancies-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 28px;
+}
+
+.vacancy-card {
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.06),
+    rgba(255, 255, 255, 0.03)
+  );
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 18px;
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(10px);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.vacancy-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 35px 70px rgba(0, 0, 0, 0.55);
+}
+
+.vacancy-card h3 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #f5c96b;
+  margin-bottom: 10px;
+}
+
+.vacancy-card p {
+  font-size: 14px;
+  color: #c6ccda;
+  line-height: 1.6;
+  flex-grow: 1;
+  margin-bottom: 28px;
+}
+
+.apply-btn {
+  text-decoration: none;
+}
+
+.apply-btn button {
+  width: 100%;
+  background: linear-gradient(135deg, #3a6ff8, #2f5de0);
+  border: none;
+  border-radius: 12px;
+  padding: 14px 0;
+  font-size: 15px;
+  font-weight: 600;
+  color: #ffffff;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.apply-btn button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px rgba(58, 111, 248, 0.45);
+}
+
+@media (max-width: 480px) {
+  .careers-page {
+    padding: 56px 16px;
+  }
+
+  .careers-title {
+    font-size: 28px;
+  }
+
+  .careers-subtitle {
+    font-size: 14px;
+    margin-bottom: 40px;
+  }
+
+  .vacancy-card {
+    padding: 22px;
+    border-radius: 16px;
+  }
+}

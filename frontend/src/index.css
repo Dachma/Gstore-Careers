@@ -1,14 +1,24 @@
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+  --blue: #3a6ff8;
+  --midnight: #0c1220;
+  --gold: #f5c96b;
+  --silver: #dde2e9;
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  --bg: #f7f9fc;
+  --text-dark: #0c1220;
+  --text-light: #ffffff;
+}
 
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Inter, system-ui, -apple-system, sans-serif;
+  background-color: var(--bg);
+  color: var(--text-dark);
+  background: linear-gradient(180deg, #0c1220 0%, #050914 100%);
+  min-height: 100vh;
+  overflow-x: hidden;
 }

@@ -1,0 +1,273 @@
+.admin-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  min-height: 100vh;
+  background: #0c1220;
+  color: #dde2e9;
+  font-family: system-ui, -apple-system, sans-serif;
+}
+
+.admin-title {
+  margin: 0;
+  font-size: 28px;
+  margin-bottom: 20px;
+  color: #f5c96b;
+}
+
+.admin-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.admin-filters {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.admin-filters input,
+.admin-filters select {
+  background: #0c1220;
+  border: 1px solid #2b3a65;
+  color: #fff;
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: 13px;
+  height: 32px;
+}
+
+/* EXPORT BUTTON */
+.export-btn {
+  background: #3a6ff8;
+  color: #fff;
+  border: none;
+  padding: 6px 14px;
+  height: 32px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.export-btn:hover {
+  opacity: 0.9;
+}
+
+.admin-controls {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.admin-controls select,
+.admin-controls input {
+  padding: 10px 12px;
+  border-radius: 6px;
+  border: 1px solid #3a6ff8;
+  background: #0c1220;
+  color: #dde2e9;
+  outline: none;
+}
+
+.admin-controls select:focus,
+.admin-controls input:focus {
+  border-color: #f5c96b;
+}
+
+.table-wrapper {
+  overflow-x: auto;
+}
+
+.admin-table {
+  padding: 10px 14px;
+  font-size: 14px;
+  width: 100%;
+  border-collapse: collapse;
+  background: #0c1220;
+}
+
+.admin-table thead {
+  background: #3a6ff8;
+}
+
+.admin-table th,
+.admin-table td {
+  padding: 12px;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.admin-table th {
+  color: white;
+  font-weight: 600;
+}
+
+.admin-table tbody tr {
+  border-bottom: 1px solid rgba(221, 226, 233, 0.1);
+}
+
+.admin-table tbody tr:hover {
+  background: rgba(58, 111, 248, 0.1);
+}
+
+.admin-table a {
+  color: #f5c96b;
+  text-decoration: none;
+}
+
+.admin-table a:hover {
+  text-decoration: underline;
+}
+
+.resume-link {
+  color: #f5c96b;
+  font-weight: 600;
+}
+
+.resume-link:hover {
+  text-decoration: underline;
+}
+
+.vacancy-badge {
+  background: rgba(221, 226, 233, 0.6);
+  color: #0c1220;
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.vacancy-frontend-dev {
+  background: rgba(58, 111, 248, 0.15);
+  color: #3a6ff8;
+}
+
+/* Junior React */
+.vacancy-junior-react {
+  background: rgba(245, 201, 107, 0.25);
+  color: #b88900;
+}
+
+/* QA */
+.vacancy-qa-engineer {
+  background: rgba(70, 190, 138, 0.2);
+  color: #2c8c64;
+}
+
+.empty-state {
+  padding: 32px;
+  text-align: center;
+  color: #a0aec0;
+  opacity: 0.7;
+}
+
+.logout-btn {
+  background: transparent;
+  border: 1px solid #f5c96b;
+  color: #f5c96b;
+  padding: 6px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.logout-btn:hover {
+  background: #f5c96b;
+  color: #0c1220;
+}
+
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 24px;
+}
+
+.pagination span {
+  color: #dde2e9;
+  font-size: 14px;
+  opacity: 0.9;
+}
+
+.pagination button {
+  background: transparent;
+  border: 1px solid #3a6ff8;
+  color: #3a6ff8;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.pagination button:hover:enabled {
+  background: #3a6ff8;
+  color: #ffffff;
+}
+
+.pagination button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  border-color: #556;
+}
+
+@media (max-width: 768px) {
+  @media (max-width: 768px) {
+    .admin-page {
+      padding: 14px;
+    }
+
+    .admin-table th,
+    .admin-table td {
+      padding: 10px 8px;
+      font-size: 13px;
+    }
+  }
+  .admin-title {
+    font-size: 22px;
+  }
+
+  .admin-controls {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .admin-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .admin-filters input,
+  .admin-filters select,
+  .export-btn {
+    width: 100%;
+  }
+
+  .pagination {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .pagination button {
+    width: 100%;
+    max-width: 240px;
+    font-size: 15px;
+    padding: 10px 0;
+  }
+
+  .pagination span {
+    order: -1;
+    font-size: 13px;
+  }
+}

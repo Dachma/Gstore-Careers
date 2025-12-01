@@ -1,9 +1,9 @@
-const API_BASE = 'http://localhost:5000';
+const API_BASE = "http://localhost:5000";
 
 export async function getApplications(params = {}) {
   const cleanParams = Object.fromEntries(
     Object.entries(params).filter(
-      ([, value]) => value !== undefined && value !== ''
+      ([, value]) => value !== undefined && value !== ""
     )
   );
 
@@ -13,7 +13,7 @@ export async function getApplications(params = {}) {
     : `${API_BASE}/applications`;
 
   const res = await fetch(url);
-  if (!res.ok) throw new Error('Failed to fetch applications');
+  if (!res.ok) throw new Error("Failed to fetch applications");
 
   return res.json();
 }

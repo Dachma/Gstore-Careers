@@ -1,0 +1,121 @@
+/* Page background */
+.admin-login-page {
+  min-height: 100vh;
+  background: linear-gradient(180deg, #0c1220, #020617);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Card */
+.admin-login-card {
+  width: 100%;
+  max-width: 420px;
+  padding: 32px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6);
+}
+
+/* Title */
+.admin-title {
+  text-align: center;
+  margin-bottom: 24px;
+  font-size: 24px;
+  color: #f5c96b;
+}
+
+/* Error */
+.admin-error {
+  color: #ff6b6b;
+  text-align: center;
+  margin-bottom: 16px;
+  font-size: 14px;
+}
+
+/* Form */
+.admin-login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Inputs */
+.admin-login-form input {
+  padding: 12px 14px;
+  font-size: 14px;
+  border-radius: 8px;
+  background: #020617;
+  border: 1px solid #1f2937;
+  color: #e5e7eb;
+}
+
+.admin-login-form input:focus {
+  outline: none;
+  border-color: #3a6ff8;
+  box-shadow: 0 0 0 2px rgba(58, 111, 248, 0.2);
+}
+
+/* Button */
+.admin-login-form button {
+  margin-top: 8px;
+  padding: 12px;
+  border-radius: 10px;
+  background: #3a6ff8;
+  border: none;
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.15s ease, opacity 0.15s ease;
+}
+
+.admin-login-form button:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+/* 📱 Tablets */
+@media (max-width: 768px) {
+  .admin-login-card {
+    padding: 28px;
+    border-radius: 14px;
+  }
+
+  .admin-title {
+    font-size: 22px;
+  }
+}
+
+/* 📱 Phones */
+@media (max-width: 480px) {
+  .admin-login-page {
+    padding: 16px;
+  }
+
+  .admin-login-card {
+    padding: 24px 20px;
+    border-radius: 12px;
+  }
+
+  .admin-title {
+    font-size: 20px;
+  }
+
+  .admin-login-form input {
+    padding: 12px;
+    font-size: 15px;
+  }
+
+  .admin-login-form button {
+    padding: 14px;
+    font-size: 15px;
+  }
+}
+
+/* 📱 Very small phones */
+@media (max-width: 360px) {
+  .admin-title {
+    font-size: 18px;
+  }
+}

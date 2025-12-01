@@ -9,8 +9,22 @@ export default function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Careers />} />
-        <Route path="/apply/:vacancyId" element={<Apply />} />
+        <Route
+          path="/"
+          element={
+            <div className="app-container">
+              <Careers />
+            </div>
+          }
+        />
+        <Route
+          path="/apply/:vacancyId"
+          element={
+            <div className="app-container">
+              <Apply />
+            </div>
+          }
+        />
         <Route path="/admin/login" element={<AdminLogin />} />
 
         <Route
